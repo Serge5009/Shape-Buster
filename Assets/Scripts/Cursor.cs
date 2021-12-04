@@ -5,7 +5,7 @@ using UnityEngine;
 public class Cursor : MonoBehaviour
 {
     public GameObject centralPoint;             //  Screen center, needed to calculate circle quality
-    public GameObject canvas;                   //  Canvas, to put new dots as its children
+    GameObject canvas;                          //  Canvas, to put new dots as its children
     public int maxPoints = 5000;                //  Max number of points until failed try
     [SerializeField] GameObject pointPrefab;    //  Prefab for single dot (part of drawn circle)
     GameObject[] allPoints;                     //  Array of all points in game
@@ -17,6 +17,7 @@ public class Cursor : MonoBehaviour
     void Start()
     {
         allPoints = new GameObject[maxPoints];  //  Populate array
+        canvas = GameObject.FindGameObjectsWithTag("Canvas")[0];    //  Link canvas by Tag
     }
 
     void Update()
