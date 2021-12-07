@@ -174,8 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centralPoint: {fileID: 1419366743}
-  canvas: {fileID: 1994747655}
-  maxPoints: 5000
+  maxPoints: 500
   pointPrefab: {fileID: 463797270955875762, guid: 0dfdaeacdbd97a84ea5d343e42c55a76, type: 3}
 --- !u!114 &514322616
 MonoBehaviour:

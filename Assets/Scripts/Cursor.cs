@@ -6,10 +6,11 @@ public class Cursor : MonoBehaviour
 {
     public GameObject centralPoint;             //  Screen center, needed to calculate circle quality
     GameObject canvas;                          //  Canvas, to put new dots as its children
-    public int maxPoints = 5000;                //  Max number of points until failed try
+    public int maxPoints = 500;                //  Max number of points until failed try
     [SerializeField] GameObject pointPrefab;    //  Prefab for single dot (part of drawn circle)
     GameObject[] allPoints;                     //  Array of all points in game
     int numPoints = 0;                          //  Point counter
+    bool isPainting = false;                    //  Click control
 
     Vector3 worldPosition;
 
@@ -30,16 +31,21 @@ public class Cursor : MonoBehaviour
         //  Add iamge to cursor
         this.transform.position = mousePos;
 
-        if (Input.GetMouseButton(0))    //  When LMB is pressed
+        if (Input.GetMouseButtonDown(0))    //  When LMB is pressed
         {
-            if(numPoints >= maxPoints)  //  Return if point max is reached
-            {
-                return;
-            }
+            isPainting = true;
+        }
 
+        if(isPainting)
+        { 
+            if(numPoints < maxPoints)  //  Return if point max is reached
+            {
             //  Calculate distance from center to cursor
             float distance = Vector3.Distance(centralPoint.transform.position, mousePos);
             Debug.Log("Distance = " + distance);
+
+                //  TODO: We want to track time between each point spawn and prevent 2 points from spawning too close
+                //  for it we will remember the position of the last dot. It will also help to scale the new dot
 
                 //  TODO: Add color code here
 
@@ -51,6 +57,11 @@ public class Cursor : MonoBehaviour
             allPoints[numPoints].transform.parent = canvas.transform;
 
             numPoints++;    //  Counter
+            }
+            else
+            {
+                Debug.Log("Ran out of dots!");
+            }
         }
 
         //  TODO: Add network code here
