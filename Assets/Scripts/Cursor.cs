@@ -6,11 +6,12 @@ public class Cursor : MonoBehaviour
 {
     public GameObject centralPoint;             //  Screen center, needed to calculate circle quality
     GameObject canvas;                          //  Canvas, to put new dots as its children
-    public int maxPoints = 500;                //  Max number of points until failed try
     [SerializeField] GameObject pointPrefab;    //  Prefab for single dot (part of drawn circle)
     GameObject[] allPoints;                     //  Array of all points in game
+    public int maxPoints = 500;                 //  Max number of points until failed try
     int numPoints = 0;                          //  Point counter
     bool isPainting = false;                    //  Click control
+    
 
     Vector3 worldPosition;
 
@@ -52,11 +53,8 @@ public class Cursor : MonoBehaviour
                 //  TODO: Add score managing here
 
 
-            //  Adding new point
-            allPoints[numPoints] = (GameObject)Instantiate(pointPrefab, mousePos, Quaternion.identity);
-            allPoints[numPoints].transform.parent = canvas.transform;
-
-            numPoints++;    //  Counter
+                //  Adding new point
+                SpawnDot(mousePos);
             }
             else
             {
@@ -66,6 +64,14 @@ public class Cursor : MonoBehaviour
 
         //  TODO: Add network code here
 
+    }
+
+    void SpawnDot(Vector3 mousePos)
+    {
+        allPoints[numPoints] = (GameObject)Instantiate(pointPrefab, mousePos, Quaternion.identity);
+        allPoints[numPoints].transform.parent = canvas.transform;
+
+        numPoints++;    //  Counter
     }
 
 }
