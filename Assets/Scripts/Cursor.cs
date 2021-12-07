@@ -19,6 +19,7 @@ public class Cursor : MonoBehaviour
     GameObject canvas;                          //  Canvas, to put new dots as its children
     [SerializeField] GameObject pointPrefab;    //  Prefab for single dot (part of drawn circle)
     GameObject[] allPoints;                     //  Array of all points in game
+    List<float> pointScore;                     //  Array of all individual dots score
     
     public int maxPoints = 500;                 //  Max number of points until failed try
     int numPoints = 0;                          //  Point counter
@@ -35,6 +36,15 @@ public class Cursor : MonoBehaviour
     float lastSize;
     public float requiredOffset = 3.0f;
 
+    float lastDistance;
+    float targetDistance;
+
+    float farDistance;      //  Distances to be considered too far/close to the center
+    float closeDistance;    //  and will give 0% score
+
+    //COLOR
+    public Color rightColor;
+    public Color wrongColor;
     
 
 
@@ -66,9 +76,7 @@ public class Cursor : MonoBehaviour
         { 
             if(numPoints < maxPoints)  //  Return if point max is reached
             {
-            //  Calculate distance from center to cursor
-            float distance = Vector3.Distance(centralPoint.transform.position, mousePos);
-            Debug.Log("Distance = " + distance);
+
 
                 //  TODO: We want to track time between each point spawn and prevent 2 points from spawning too close
                 //  for it we will remember the position of the last dot. It will also help to scale the new dot
@@ -109,7 +117,6 @@ public class Cursor : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && state == RoundState.FINISHED)    //  When LMB first clicked
         {
             Retry();
-            StartDrawing();
         }
     }
 
@@ -135,6 +142,18 @@ public class Cursor : MonoBehaviour
         lastPosition = mousePos;
         timeFromLastDot = 0;
 
+        //  Calculate distance from center to cursor
+        float distance = Vector3.Distance(centralPoint.transform.position, mousePos);
+
+        if(numPoints == 0)//    If it's the first dot spawned
+        {
+            targetDistance = distance;
+            farDistance = distance * 2;
+            closeDistance = distance / 2;
+        }
+
+        NewDotScore(distance);
+
         numPoints++;    //  Counter
     }
 
@@ -146,6 +165,8 @@ public class Cursor : MonoBehaviour
     void Finish()
     {
         state = RoundState.TIMEOUT;
+        //
+
     }
 
     void StopDrawing()
@@ -156,11 +177,11 @@ public class Cursor : MonoBehaviour
     void Retry()    //  Restart the level for another try
     {
         foreach(GameObject i in allPoints)
-        {
+        {   //  Delete all old points
             Destroy(i);
         }
-        numPoints = 0;
-        state = RoundState.READY;
+        numPoints = 0;  //  Reset counter
+        StartDrawing(); //  Start next try
     }
 
     Vector3 NewDotScale()
@@ -184,4 +205,31 @@ public class Cursor : MonoBehaviour
         lastSize = scaleFactor;
         return scale;
     }
+
+    void NewDotScore(float dist)
+    {
+        float score = 100.0f; //  Maximal point score
+
+        if(dist > targetDistance)
+        {
+            score = 1.0f - (dist - targetDistance) / (farDistance - targetDistance);
+            score *= 100.0f;
+        }
+        if (dist < targetDistance)
+        {
+            score = (dist - closeDistance) / (targetDistance - closeDistance);
+            score *= 100.0f;
+        }
+        else
+        {
+            //  Do nothing, this dot is perfect
+        }
+
+        Debug.Log("Last score: " + score);
+        pointScore.Add(score);
+
+    }
+
+
+
 }
