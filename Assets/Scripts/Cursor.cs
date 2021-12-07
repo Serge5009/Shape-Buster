@@ -2,24 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum RoundState
+{
+    READY,
+    DRAWING,
+    FINISHED,
+
+    NUM_STATES
+}
+
 public class Cursor : MonoBehaviour
 {
     public GameObject centralPoint;             //  Screen center, needed to calculate circle quality
     GameObject canvas;                          //  Canvas, to put new dots as its children
     [SerializeField] GameObject pointPrefab;    //  Prefab for single dot (part of drawn circle)
     GameObject[] allPoints;                     //  Array of all points in game
+    
     public int maxPoints = 500;                 //  Max number of points until failed try
     int numPoints = 0;                          //  Point counter
-    bool isPainting = false;                    //  Click control
+    RoundState state;                           //  Simple state machine
     
 
-    Vector3 worldPosition;
+    //Vector3 worldPosition;
 
 
     void Start()
     {
         allPoints = new GameObject[maxPoints];  //  Populate array
         canvas = GameObject.FindGameObjectsWithTag("Canvas")[0];    //  Link canvas by Tag
+        state = RoundState.READY;
     }
 
     void Update()
@@ -27,17 +38,14 @@ public class Cursor : MonoBehaviour
         //  Find cursor position
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = Camera.main.nearClipPlane;
-        worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
+        //worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
 
         //  Add iamge to cursor
         this.transform.position = mousePos;
 
-        if (Input.GetMouseButtonDown(0))    //  When LMB is pressed
-        {
-            isPainting = true;
-        }
+        ClickProcess();
 
-        if(isPainting)
+        if (state == RoundState.DRAWING)
         { 
             if(numPoints < maxPoints)  //  Return if point max is reached
             {
@@ -59,11 +67,29 @@ public class Cursor : MonoBehaviour
             else
             {
                 Debug.Log("Ran out of dots!");
+                StopDrawing();
             }
         }
 
         //  TODO: Add network code here
 
+    }
+
+    void ClickProcess() //  Calls state-related function according to mouse input & current state
+    {
+        if (Input.GetMouseButtonDown(0) && state == RoundState.READY)    //  When LMB first clicked
+        {
+            StartDrawing();
+        }
+        if (Input.GetMouseButtonUp(0) && state == RoundState.DRAWING)    //  When LMB released
+        {
+            StopDrawing();
+        }
+        if (Input.GetMouseButtonDown(0) && state == RoundState.FINISHED)    //  When LMB first clicked
+        {
+            Retry();
+            StartDrawing();
+        }
     }
 
     void SpawnDot(Vector3 mousePos)
@@ -74,4 +100,23 @@ public class Cursor : MonoBehaviour
         numPoints++;    //  Counter
     }
 
+    void StartDrawing()
+    {
+        state = RoundState.DRAWING;
+    }
+
+    void StopDrawing()
+    {
+        state = RoundState.FINISHED;
+    }
+
+    void Retry()    //  Restart the level for another try
+    {
+        foreach(GameObject i in allPoints)
+        {
+            Destroy(i);
+        }
+        numPoints = 0;
+        state = RoundState.READY;
+    }
 }
