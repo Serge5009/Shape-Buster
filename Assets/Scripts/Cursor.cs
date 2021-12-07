@@ -57,6 +57,7 @@ public class Cursor : MonoBehaviour
         canvas = GameObject.FindGameObjectsWithTag("Canvas")[0];    //  Link canvas by Tag
         state = RoundState.READY;
         timeLeft = timeToDraw;
+        pointScore = new List<float>();
     }
 
     void Update()
@@ -153,6 +154,7 @@ public class Cursor : MonoBehaviour
         }
 
         NewDotScore(distance);
+        //NewDotPaint();
 
         numPoints++;    //  Counter
     }
@@ -181,6 +183,7 @@ public class Cursor : MonoBehaviour
             Destroy(i);
         }
         numPoints = 0;  //  Reset counter
+        pointScore.Clear();
         StartDrawing(); //  Start next try
     }
 
@@ -229,7 +232,5 @@ public class Cursor : MonoBehaviour
         pointScore.Add(score);
 
     }
-
-
 
 }
