@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 enum RoundState
 {
     READY,
     DRAWING,
     FINISHED,
+    TIMEOUT,
 
     NUM_STATES
 }
@@ -21,7 +23,14 @@ public class Cursor : MonoBehaviour
     public int maxPoints = 500;                 //  Max number of points until failed try
     int numPoints = 0;                          //  Point counter
     RoundState state;                           //  Simple state machine
-    
+
+    //TIME TRACKING
+    public float timeToDraw;
+    float timeLeft;
+    float timeFromLastDot;
+    public Text timer;
+
+
 
     //Vector3 worldPosition;
 
@@ -31,6 +40,7 @@ public class Cursor : MonoBehaviour
         allPoints = new GameObject[maxPoints];  //  Populate array
         canvas = GameObject.FindGameObjectsWithTag("Canvas")[0];    //  Link canvas by Tag
         state = RoundState.READY;
+        timeLeft = timeToDraw;
     }
 
     void Update()
@@ -44,6 +54,7 @@ public class Cursor : MonoBehaviour
         this.transform.position = mousePos;
 
         ClickProcess();
+        TimeProcess();
 
         if (state == RoundState.DRAWING)
         { 
@@ -92,6 +103,17 @@ public class Cursor : MonoBehaviour
         }
     }
 
+    void TimeProcess()
+    {
+        timeLeft -= Time.deltaTime;
+        timer.text = timeLeft.ToString();
+
+        if(timeLeft <= 0)
+        {
+            Finish();
+        }    
+    }
+
     void SpawnDot(Vector3 mousePos)
     {
         allPoints[numPoints] = (GameObject)Instantiate(pointPrefab, mousePos, Quaternion.identity);
@@ -103,6 +125,11 @@ public class Cursor : MonoBehaviour
     void StartDrawing()
     {
         state = RoundState.DRAWING;
+    }
+
+    void Finish()
+    {
+        state = RoundState.TIMEOUT;
     }
 
     void StopDrawing()
