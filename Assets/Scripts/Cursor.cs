@@ -30,6 +30,12 @@ public class Cursor : MonoBehaviour
     float timeFromLastDot;
     public Text timer;
 
+    //LAST POINT
+    Vector3 lastPosition;
+    float lastSize;
+    public float requiredOffset = 3.0f;
+
+    
 
 
     //Vector3 worldPosition;
@@ -73,7 +79,11 @@ public class Cursor : MonoBehaviour
 
 
                 //  Adding new point
-                SpawnDot(mousePos);
+                float lastDistance = Vector3.Distance(lastPosition, mousePos);
+                if (lastDistance >= requiredOffset)
+                {
+                    SpawnDot(mousePos);
+                }
             }
             else
             {
@@ -106,6 +116,8 @@ public class Cursor : MonoBehaviour
     void TimeProcess()
     {
         timeLeft -= Time.deltaTime;
+        timeFromLastDot += Time.deltaTime;
+
         timer.text = timeLeft.ToString();
 
         if(timeLeft <= 0)
@@ -118,6 +130,10 @@ public class Cursor : MonoBehaviour
     {
         allPoints[numPoints] = (GameObject)Instantiate(pointPrefab, mousePos, Quaternion.identity);
         allPoints[numPoints].transform.parent = canvas.transform;
+        allPoints[numPoints].transform.localScale = NewDotScale();
+
+        lastPosition = mousePos;
+        timeFromLastDot = 0;
 
         numPoints++;    //  Counter
     }
@@ -145,5 +161,27 @@ public class Cursor : MonoBehaviour
         }
         numPoints = 0;
         state = RoundState.READY;
+    }
+
+    Vector3 NewDotScale()
+    {
+        Vector3 scale;
+        float scaleChange = Mathf.Pow(1.05f, timeFromLastDot * 100) - 1.1f;
+        float scaleFactor;
+        scaleFactor = lastSize + scaleChange;
+        //scaleFactor *= 0.8f;
+
+        if (scaleFactor > 3.0f)
+            scaleFactor = 3.0f;
+
+        if (scaleFactor < 0.7f)
+            scaleFactor = 0.7f;
+
+        scale.x = scaleFactor;
+        scale.y = scaleFactor;
+        scale.z = 1.0f;
+
+        lastSize = scaleFactor;
+        return scale;
     }
 }
