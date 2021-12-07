@@ -77,16 +77,6 @@ public class Cursor : MonoBehaviour
         { 
             if(numPoints < maxPoints)  //  Return if point max is reached
             {
-
-
-                //  TODO: We want to track time between each point spawn and prevent 2 points from spawning too close
-                //  for it we will remember the position of the last dot. It will also help to scale the new dot
-
-                //  TODO: Add color code here
-
-                //  TODO: Add score managing here
-
-
                 //  Adding new point
                 float lastDistance = Vector3.Distance(lastPosition, mousePos);
                 if (lastDistance >= requiredOffset)
@@ -154,7 +144,7 @@ public class Cursor : MonoBehaviour
         }
 
         NewDotScore(distance);
-        //NewDotPaint();
+        NewDotPaint();
 
         numPoints++;    //  Counter
     }
@@ -230,6 +220,16 @@ public class Cursor : MonoBehaviour
 
         Debug.Log("Last score: " + score);
         pointScore.Add(score);
+
+    }
+
+    void NewDotPaint()
+    {
+        float colorFactor = pointScore[numPoints] / 100.0f;
+
+        Color dotColor = Color.Lerp(wrongColor, rightColor, colorFactor);
+
+        allPoints[numPoints].GetComponent<Image>().color = dotColor;
 
     }
 

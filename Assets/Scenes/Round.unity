@@ -306,8 +306,8 @@ MonoBehaviour:
   timeToDraw: 50
   timer: {fileID: 441280111}
   requiredOffset: 3
-  rightColor: {r: 0, g: 1, b: 0.12981081, a: 0}
-  wrongColor: {r: 1, g: 0, b: 0, a: 0}
+  rightColor: {r: 0.4946947, g: 1, b: 0, a: 1}
+  wrongColor: {r: 1, g: 0.1948227, b: 0, a: 1}
 --- !u!114 &514322616
 MonoBehaviour:
   m_ObjectHideFlags: 0
