@@ -45,7 +45,9 @@ public class Cursor : MonoBehaviour
     //COLOR
     public Color rightColor;
     public Color wrongColor;
-    
+
+    public Text scoreText;      //  To display score
+    float currentScore;
 
 
     //Vector3 worldPosition;
@@ -70,8 +72,10 @@ public class Cursor : MonoBehaviour
         //  Add iamge to cursor
         this.transform.position = mousePos;
 
-        ClickProcess();
-        TimeProcess();
+        ClickProcess(); //  State control based on mouse clics
+        TimeProcess();  //  Controls all timers
+        CurrentScore(); //  Calculates score and saves it to float currentScore
+        UpdateText();   //  Keeps UI text up to date
 
         if (state == RoundState.DRAWING)
         { 
@@ -116,8 +120,6 @@ public class Cursor : MonoBehaviour
         timeLeft -= Time.deltaTime;
         timeFromLastDot += Time.deltaTime;
 
-        timer.text = timeLeft.ToString();
-
         if(timeLeft <= 0)
         {
             Finish();
@@ -156,8 +158,8 @@ public class Cursor : MonoBehaviour
 
     void Finish()
     {
+
         state = RoundState.TIMEOUT;
-        //
 
     }
 
@@ -218,6 +220,9 @@ public class Cursor : MonoBehaviour
             //  Do nothing, this dot is perfect
         }
 
+        if (score < 0)  //  To prevent negative score
+            score = 0;
+
         Debug.Log("Last score: " + score);
         pointScore.Add(score);
 
@@ -230,6 +235,27 @@ public class Cursor : MonoBehaviour
         Color dotColor = Color.Lerp(wrongColor, rightColor, colorFactor);
 
         allPoints[numPoints].GetComponent<Image>().color = dotColor;
+
+    }
+
+    void CurrentScore()
+    {
+        float scoreSum = 0;
+        foreach (float i in pointScore)
+        {
+            scoreSum += i;
+        }
+        scoreSum /= pointScore.Count;
+
+        currentScore = scoreSum;
+    }
+
+    void UpdateText()   //  Called every update, refresh UI text
+    {
+
+        scoreText.text = ("Score: " + currentScore.ToString() + "%");
+        timer.text = timeLeft.ToString();
+
 
     }
 
