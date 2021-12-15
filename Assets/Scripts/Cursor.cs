@@ -20,7 +20,9 @@ public class Cursor : MonoBehaviour
     [SerializeField] GameObject pointPrefab;    //  Prefab for single dot (part of drawn circle)
     GameObject[] allPoints;                     //  Array of all points in game
     List<float> pointScore;                     //  Array of all individual dots score
-    
+    Vector3 mousePos;
+
+
     public int maxPoints = 500;                 //  Max number of points until failed try
     int numPoints = 0;                          //  Point counter
     RoundState state;                           //  Simple state machine
@@ -65,7 +67,7 @@ public class Cursor : MonoBehaviour
     void Update()
     {
         //  Find cursor position
-        Vector3 mousePos = Input.mousePosition;
+        mousePos = Input.mousePosition;
         mousePos.z = Camera.main.nearClipPlane;
         //worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
 
@@ -77,9 +79,17 @@ public class Cursor : MonoBehaviour
         CurrentScore(); //  Calculates score and saves it to float currentScore
         UpdateText();   //  Keeps UI text up to date
 
+        
+
+        //  TODO: Add network code here
+
+    }
+
+    void FixedUpdate()
+    {
         if (state == RoundState.DRAWING)
-        { 
-            if(numPoints < maxPoints)  //  Return if point max is reached
+        {
+            if (numPoints < maxPoints)
             {
                 //  Adding new point
                 float lastDistance = Vector3.Distance(lastPosition, mousePos);
@@ -94,9 +104,6 @@ public class Cursor : MonoBehaviour
                 StopDrawing();
             }
         }
-
-        //  TODO: Add network code here
-
     }
 
     void ClickProcess() //  Calls state-related function according to mouse input & current state
@@ -246,8 +253,7 @@ public class Cursor : MonoBehaviour
             scoreSum += i;
         }
         scoreSum /= pointScore.Count;
-
-        currentScore = scoreSum;
+        currentScore = Mathf.Round(scoreSum);
     }
 
     void UpdateText()   //  Called every update, refresh UI text
@@ -257,6 +263,12 @@ public class Cursor : MonoBehaviour
         timer.text = timeLeft.ToString();
 
 
+    }
+
+    void Reset()
+    {
+        Retry();
+        timeLeft = timeToDraw;
     }
 
 }
