@@ -58,7 +58,7 @@ public class Cursor : MonoBehaviour
     void Start()
     {
         allPoints = new GameObject[maxPoints];  //  Populate array
-        canvas = GameObject.FindGameObjectsWithTag("Canvas")[0];    //  Link canvas by Tag
+        canvas = GameObject.FindGameObjectsWithTag("GameCanvas")[0];    //  Link canvas by Tag
         state = RoundState.READY;
         timeLeft = timeToDraw;
         pointScore = new List<float>();

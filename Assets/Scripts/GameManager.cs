@@ -5,10 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject cursor;
-
-    [SerializeField]
     Player[] players;   //  Contains scores & stats for all players
+
+    int activeTurn;
 
     [SerializeField]
     ScenesManager sManager;
@@ -26,6 +25,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -35,10 +36,21 @@ public class GameManager : MonoBehaviour
     {
         //StartCoroutine(InitialLoading());   //  Load main menu scene
         sManager.LoadRound();   //  Will be called by button later!!
-        players[0].StartRound();
+        StartGame();
     }
 
+    void StartGame()
+    {
+        players[0] = new Player();    //  User
+        players[1] = new Player();    //  AI or online opponent
 
+        activeTurn = UnityEngine.Random.Range(0, players.Length);
+
+        Debug.Log(activeTurn);
+
+        players[activeTurn].StartRound();
+
+    }
 
 
     IEnumerator InitialLoading()
