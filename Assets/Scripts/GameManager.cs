@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Player[] players;   //  Contains scores & stats for all players
 
+    [SerializeField]
+    ScenesManager sManager;
+
     private static GameManager _instance;   //  Singleton pattern
     public static GameManager Instance
     {
@@ -30,6 +33,21 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        //StartCoroutine(InitialLoading());   //  Load main menu scene
+        sManager.LoadRound();   //  Will be called by button later!!
         players[0].StartRound();
+    }
+
+
+
+
+    IEnumerator InitialLoading()
+    {
+        //  Do some loading stuff here (if needed)
+
+
+        yield return new WaitForSeconds(2);
+        sManager.LoadMainMenu();
+
     }
 }
