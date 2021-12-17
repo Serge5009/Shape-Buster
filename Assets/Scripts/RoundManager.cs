@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum RoundState
+{
+    COUNTDOWN,
+    READY,
+    DRAWING,
+    FINISHED,
+    TIMEOUT,
+
+    NUM_STATES
+}
+
 public class RoundManager : MonoBehaviour
 {
     [SerializeField]
@@ -15,10 +26,17 @@ public class RoundManager : MonoBehaviour
 
     public int secToCountdown = 3;
 
+    public RoundState state = RoundState.COUNTDOWN;                           //  Simple state machine
+
     public void StartGame()
     {
         StartCoroutine(Countdown());
 
+
+    }
+
+    void Update()
+    {
 
     }
 
@@ -36,5 +54,6 @@ public class RoundManager : MonoBehaviour
         StartText.SetActive(false);
         StartTimer.SetActive(false);
         cursor.SetActive(true); //  Allow player to start drawing
+        state = RoundState.READY;
     }
 }
