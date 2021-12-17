@@ -554,6 +554,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 610669989}
   m_CullTransparentMesh: 1
+--- !u!1 &736386285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 736386287}
+  - component: {fileID: 736386286}
+  m_Layer: 0
+  m_Name: Buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &736386286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736386285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e105363833bcff44b061221be8dae11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sManager: {fileID: 0}
+  SingleplayerButton: {fileID: 1186634078}
+  MultiplayerButton: {fileID: 1753017375}
+  HelpButton: {fileID: 383026754}
+  QuitButton: {fileID: 1704768202}
+  LeaderboardButton: {fileID: 1339895875}
+  SettingsButton: {fileID: 1999983306}
+--- !u!4 &736386287
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736386285}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1187.8857, y: 397.24506, z: -138.03116}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1009465901
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,7 +1425,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -59.00006, y: -793}
+  m_AnchoredPosition: {x: -59.000122, y: -793}
   m_SizeDelta: {x: 782, y: 131}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1704768202

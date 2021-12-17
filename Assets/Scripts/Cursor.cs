@@ -3,16 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-enum RoundState
-{
-    READY,
-    DRAWING,
-    FINISHED,
-    TIMEOUT,
-
-    NUM_STATES
-}
-
 public class Cursor : MonoBehaviour
 {
     public GameObject centralPoint;             //  Screen center, needed to calculate circle quality
@@ -25,7 +15,8 @@ public class Cursor : MonoBehaviour
 
     public int maxPoints = 500;                 //  Max number of points until failed try
     int numPoints = 0;                          //  Point counter
-    RoundState state;                           //  Simple state machine
+
+    RoundManager rManager;                      //  Round Manager
 
     //TIME TRACKING
     public float timeToDraw;
@@ -49,19 +40,50 @@ public class Cursor : MonoBehaviour
     public Color wrongColor;
 
     public Text scoreText;      //  To display score
-    float currentScore;
+    public float currentScore;
 
 
     //Vector3 worldPosition;
 
 
-    void Start()
+    void Awake()
     {
-        allPoints = new GameObject[maxPoints];  //  Populate array
-        canvas = GameObject.FindGameObjectsWithTag("Canvas")[0];    //  Link canvas by Tag
-        state = RoundState.READY;
+        LoadRound();
+        rManager.state = RoundState.READY;
         timeLeft = timeToDraw;
         pointScore = new List<float>();
+    }
+
+
+    void LoadRound()
+    {
+
+        allPoints = new GameObject[maxPoints];  //  Populate array
+        canvas = GameObject.FindGameObjectsWithTag("GameCanvas")[0];    //  Link canvas by Tag
+
+        GameObject roundManager = new GameObject();
+        roundManager = GameObject.FindWithTag("RoundManager");
+        if (roundManager == null)
+            Debug.Log("No round manager!");
+
+        rManager = new RoundManager();
+        rManager = roundManager.GetComponent<RoundManager>();
+        if (rManager == null)
+            Debug.Log("No round manager script!");
+    }
+
+    public void StartRound()
+    {
+        timeLeft = timeToDraw;
+        rManager.state = RoundState.READY;
+
+        foreach (GameObject i in allPoints)
+        {   //  Delete all old points
+            Destroy(i);
+        }
+        numPoints = 0;  //  Reset counter
+
+        pointScore.Clear();
     }
 
     void Update()
@@ -87,7 +109,7 @@ public class Cursor : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (state == RoundState.DRAWING)
+        if (rManager.state == RoundState.DRAWING)
         {
             if (numPoints < maxPoints)
             {
@@ -108,15 +130,15 @@ public class Cursor : MonoBehaviour
 
     void ClickProcess() //  Calls state-related function according to mouse input & current state
     {
-        if (Input.GetMouseButtonDown(0) && state == RoundState.READY)    //  When LMB first clicked
+        if (Input.GetMouseButtonDown(0) && rManager.state == RoundState.READY)    //  When LMB first clicked
         {
             StartDrawing();
         }
-        if (Input.GetMouseButtonUp(0) && state == RoundState.DRAWING)    //  When LMB released
+        if (Input.GetMouseButtonUp(0) && rManager.state == RoundState.DRAWING)    //  When LMB released
         {
             StopDrawing();
         }
-        if (Input.GetMouseButtonDown(0) && state == RoundState.FINISHED)    //  When LMB first clicked
+        if (Input.GetMouseButtonDown(0) && rManager.state == RoundState.FINISHED)    //  When LMB first clicked
         {
             Retry();
         }
@@ -160,19 +182,19 @@ public class Cursor : MonoBehaviour
 
     void StartDrawing()
     {
-        state = RoundState.DRAWING;
+        rManager.state = RoundState.DRAWING;
     }
 
     void Finish()
     {
 
-        state = RoundState.TIMEOUT;
+        rManager.state = RoundState.TIMEOUT;
 
     }
 
     void StopDrawing()
     {
-        state = RoundState.FINISHED;
+        rManager.state = RoundState.FINISHED;
     }
 
     void Retry()    //  Restart the level for another try
@@ -230,7 +252,7 @@ public class Cursor : MonoBehaviour
         if (score < 0)  //  To prevent negative score
             score = 0;
 
-        Debug.Log("Last score: " + score);
+        //Debug.Log("Last score: " + score);
         pointScore.Add(score);
 
     }
@@ -259,7 +281,7 @@ public class Cursor : MonoBehaviour
     void UpdateText()   //  Called every update, refresh UI text
     {
 
-        scoreText.text = ("Score: " + currentScore.ToString() + "%");
+        scoreText.text = ("P1: " + currentScore.ToString() + "%");
         timer.text = timeLeft.ToString();
 
 

@@ -316,6 +316,7 @@ GameObject:
   - component: {fileID: 856679899}
   - component: {fileID: 856679898}
   - component: {fileID: 856679897}
+  - component: {fileID: 856679900}
   m_Layer: 5
   m_Name: Back BG
   m_TagString: Untagged
@@ -426,6 +427,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 856679895}
   m_CullTransparentMesh: 1
+--- !u!114 &856679900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856679895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31e8ab6e5d9058049a0688eaae21a2ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sManager: {fileID: 0}
 --- !u!1 &878694800
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,8 +1011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c4bb9ff618d614786bd7fcb3ebd1b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 0}
-  players: []
+  player: {fileID: 0}
   sManager: {fileID: 2095675804}
 --- !u!4 &1389295319
 Transform:
@@ -1383,7 +1396,7 @@ GameObject:
   - component: {fileID: 2095675804}
   m_Layer: 0
   m_Name: ScenesManager
-  m_TagString: Untagged
+  m_TagString: SceneManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1400,6 +1413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68fd287f8cbb961409ce22ec7d99d59d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeScene: 0
+  gManager: {fileID: 1389295318}
 --- !u!4 &2095675805
 Transform:
   m_ObjectHideFlags: 0

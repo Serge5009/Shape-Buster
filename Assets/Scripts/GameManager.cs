@@ -5,10 +5,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject cursor;
+    Player player;   //  Contains scores & stats for player
+    Player enemy;   //  Contains scores & stats for enemy
 
-    [SerializeField]
-    Player[] players;   //  Contains scores & stats for all players
+    int activeTurn;
 
     [SerializeField]
     ScenesManager sManager;
@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -33,13 +35,45 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //StartCoroutine(InitialLoading());   //  Load main menu scene
-        sManager.LoadRound();   //  Will be called by button later!!
-        players[0].StartRound();
+        StartCoroutine(InitialLoading());   //  Load main menu scene
+
     }
 
+    void StartGame()
+    {
+
+        player = new Player();    //  User
+        enemy = new Player();    //  AI or online opponent
+
+        activeTurn = UnityEngine.Random.Range(0, 1);
+
+        Debug.Log(activeTurn);
+
+        GameObject roundManager = new GameObject();
+        roundManager = GameObject.FindWithTag("RoundManager");
+        if(roundManager == null)
+            Debug.Log("No round manager!");
+
+        RoundManager rManager = new RoundManager();
+        rManager = roundManager.GetComponent<RoundManager>();
+        if (rManager == null)
+            Debug.Log("No round manager script!");
+
+        rManager.StartGame();
+
+        //player[activeTurn].StartRound();
+
+    }
+
+    public IEnumerator GameStartDelay()
+    {
+        //  Do some loading stuff here (if needed)
 
 
+        yield return new WaitForSeconds(0.1f);
+        StartGame();
+
+    }
 
     IEnumerator InitialLoading()
     {
