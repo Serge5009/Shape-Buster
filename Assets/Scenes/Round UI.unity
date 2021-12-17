@@ -1559,6 +1559,34 @@ PrefabInstance:
       propertyPath: centralPoint
       value: 
       objectReference: {fileID: 1534380510}
+    - target: {fileID: 6331834616516181737, guid: bf28b4eb74647354cb2e7e839141f765, type: 3}
+      propertyPath: rightColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6331834616516181737, guid: bf28b4eb74647354cb2e7e839141f765, type: 3}
+      propertyPath: rightColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6331834616516181737, guid: bf28b4eb74647354cb2e7e839141f765, type: 3}
+      propertyPath: rightColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6331834616516181737, guid: bf28b4eb74647354cb2e7e839141f765, type: 3}
+      propertyPath: wrongColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6331834616516181737, guid: bf28b4eb74647354cb2e7e839141f765, type: 3}
+      propertyPath: wrongColor.b
+      value: 0.28235295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6331834616516181737, guid: bf28b4eb74647354cb2e7e839141f765, type: 3}
+      propertyPath: wrongColor.g
+      value: 0.18039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 6331834616516181737, guid: bf28b4eb74647354cb2e7e839141f765, type: 3}
+      propertyPath: wrongColor.r
+      value: 0.14117648
+      objectReference: {fileID: 0}
     - target: {fileID: 6331834616516181739, guid: bf28b4eb74647354cb2e7e839141f765, type: 3}
       propertyPath: m_Name
       value: Cursor
