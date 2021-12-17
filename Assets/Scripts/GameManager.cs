@@ -35,10 +35,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //StartCoroutine(InitialLoading());   //  Load main menu scene
-        sManager.LoadRound();   //  Will be called by button later!!
+        StartCoroutine(InitialLoading());   //  Load main menu scene
+        //sManager.LoadRound();   //  Will be called by button later!!
 
-        StartCoroutine(GameStartDelay());
+        //StartCoroutine(GameStartDelay());
     }
 
     void StartGame()

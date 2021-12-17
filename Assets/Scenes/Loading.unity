@@ -997,8 +997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c4bb9ff618d614786bd7fcb3ebd1b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 0}
-  players: []
+  player: {fileID: 0}
   sManager: {fileID: 2095675804}
 --- !u!4 &1389295319
 Transform:
@@ -1383,7 +1382,7 @@ GameObject:
   - component: {fileID: 2095675804}
   m_Layer: 0
   m_Name: ScenesManager
-  m_TagString: Untagged
+  m_TagString: SceneManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
