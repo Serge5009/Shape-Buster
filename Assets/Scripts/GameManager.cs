@@ -5,7 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    Player[] players;   //  Contains scores & stats for all players
+    Player player;   //  Contains scores & stats for player
+    Player enemy;   //  Contains scores & stats for enemy
 
     int activeTurn;
 
@@ -36,22 +37,46 @@ public class GameManager : MonoBehaviour
     {
         //StartCoroutine(InitialLoading());   //  Load main menu scene
         sManager.LoadRound();   //  Will be called by button later!!
-        StartGame();
+
+        StartCoroutine(GameStartDelay());
     }
 
     void StartGame()
     {
-        players[0] = new Player();    //  User
-        players[1] = new Player();    //  AI or online opponent
 
-        activeTurn = UnityEngine.Random.Range(0, players.Length);
+        player = new Player();    //  User
+        enemy = new Player();    //  AI or online opponent
+
+        activeTurn = UnityEngine.Random.Range(0, 1);
 
         Debug.Log(activeTurn);
 
-        players[activeTurn].StartRound();
+        GameObject roundManager = new GameObject();
+        roundManager = GameObject.FindWithTag("RoundManager");
+        if(roundManager == null)
+            Debug.Log("No round manager!");
+
+        RoundManager rManager = new RoundManager();
+        rManager = roundManager.GetComponent<RoundManager>();
+        if (rManager == null)
+            Debug.Log("No round manager script!");
+
+        rManager.StartGame();
+
+        //player[activeTurn].StartRound();
 
     }
 
+
+    IEnumerator GameStartDelay()
+    {
+        //  Do some loading stuff here (if needed)
+
+
+        yield return new WaitForSeconds(1);
+        StartGame();
+
+    }
 
     IEnumerator InitialLoading()
     {

@@ -230,7 +230,7 @@ public class Cursor : MonoBehaviour
         if (score < 0)  //  To prevent negative score
             score = 0;
 
-        Debug.Log("Last score: " + score);
+        //Debug.Log("Last score: " + score);
         pointScore.Add(score);
 
     }
@@ -259,7 +259,7 @@ public class Cursor : MonoBehaviour
     void UpdateText()   //  Called every update, refresh UI text
     {
 
-        scoreText.text = ("Score: " + currentScore.ToString() + "%");
+        scoreText.text = ("P1: " + currentScore.ToString() + "%");
         timer.text = timeLeft.ToString();
 
 
