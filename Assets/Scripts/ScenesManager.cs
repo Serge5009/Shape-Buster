@@ -17,6 +17,9 @@ public class ScenesManager : MonoBehaviour
 {
     public GameScenes activeScene;
 
+    [SerializeField]
+    GameManager gManager;
+
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -31,8 +34,9 @@ public class ScenesManager : MonoBehaviour
 
     public void LoadRound()
     {
-        SceneManager.LoadScene(2);
-        activeScene = GameScenes.ROUND;
+        SceneManager.LoadScene(2);                  //  Load scene
+        activeScene = GameScenes.ROUND;             //  Set state
+        StartCoroutine(gManager.GameStartDelay());  //  Call round start after short delay
     }
 
     public void LoadHelp()

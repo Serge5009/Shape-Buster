@@ -583,7 +583,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e105363833bcff44b061221be8dae11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SinglePlayerButton: {fileID: 1186634078}
+  sManager: {fileID: 0}
+  SingleplayerButton: {fileID: 1186634078}
+  MultiplayerButton: {fileID: 1753017375}
+  HelpButton: {fileID: 383026754}
+  QuitButton: {fileID: 1704768202}
+  LeaderboardButton: {fileID: 1339895875}
+  SettingsButton: {fileID: 1999983306}
 --- !u!4 &736386287
 Transform:
   m_ObjectHideFlags: 0
@@ -1419,7 +1425,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -59.00006, y: -793}
+  m_AnchoredPosition: {x: -59.000122, y: -793}
   m_SizeDelta: {x: 782, y: 131}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1704768202

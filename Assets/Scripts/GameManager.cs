@@ -36,9 +36,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(InitialLoading());   //  Load main menu scene
-        //sManager.LoadRound();   //  Will be called by button later!!
 
-        //StartCoroutine(GameStartDelay());
     }
 
     void StartGame()
@@ -67,13 +65,12 @@ public class GameManager : MonoBehaviour
 
     }
 
-
-    IEnumerator GameStartDelay()
+    public IEnumerator GameStartDelay()
     {
         //  Do some loading stuff here (if needed)
 
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.1f);
         StartGame();
 
     }

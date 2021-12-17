@@ -1400,6 +1400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeScene: 0
+  gManager: {fileID: 1389295318}
 --- !u!4 &2095675805
 Transform:
   m_ObjectHideFlags: 0
