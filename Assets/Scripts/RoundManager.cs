@@ -28,6 +28,8 @@ public class RoundManager : MonoBehaviour
 
     public RoundState state = RoundState.COUNTDOWN;                           //  Simple state machine
 
+    public float finalScore;
+
     public void StartGame()
     {
         StartCoroutine(Countdown());
@@ -38,13 +40,21 @@ public class RoundManager : MonoBehaviour
     void Update()
     {
 
+
+        if(state == RoundState.TIMEOUT)
+        {
+            finalScore = cursor.GetComponent<Cursor>().currentScore;
+            state = RoundState.COUNTDOWN;
+            StartCoroutine(Countdown());
+
+        }
     }
 
     IEnumerator Countdown()
     {
         StartText.SetActive(true);
         StartTimer.SetActive(true);
-        //  Do some loading stuff here (if needed)
+
         for (int i = secToCountdown; i > 0; i--)
         {
             StartTimer.GetComponent<Text>().text = i.ToString();
@@ -55,5 +65,6 @@ public class RoundManager : MonoBehaviour
         StartTimer.SetActive(false);
         cursor.SetActive(true); //  Allow player to start drawing
         state = RoundState.READY;
+        cursor.GetComponent<Cursor>().StartRound();
     }
 }

@@ -16,8 +16,7 @@ public class Cursor : MonoBehaviour
     public int maxPoints = 500;                 //  Max number of points until failed try
     int numPoints = 0;                          //  Point counter
 
-    RoundManager rManager;
-    //RoundState state;                           //  Simple state machine
+    RoundManager rManager;                      //  Round Manager
 
     //TIME TRACKING
     public float timeToDraw;
@@ -41,7 +40,7 @@ public class Cursor : MonoBehaviour
     public Color wrongColor;
 
     public Text scoreText;      //  To display score
-    float currentScore;
+    public float currentScore;
 
 
     //Vector3 worldPosition;
@@ -53,6 +52,38 @@ public class Cursor : MonoBehaviour
         rManager.state = RoundState.READY;
         timeLeft = timeToDraw;
         pointScore = new List<float>();
+    }
+
+
+    void LoadRound()
+    {
+
+        allPoints = new GameObject[maxPoints];  //  Populate array
+        canvas = GameObject.FindGameObjectsWithTag("GameCanvas")[0];    //  Link canvas by Tag
+
+        GameObject roundManager = new GameObject();
+        roundManager = GameObject.FindWithTag("RoundManager");
+        if (roundManager == null)
+            Debug.Log("No round manager!");
+
+        rManager = new RoundManager();
+        rManager = roundManager.GetComponent<RoundManager>();
+        if (rManager == null)
+            Debug.Log("No round manager script!");
+    }
+
+    public void StartRound()
+    {
+        timeLeft = timeToDraw;
+        rManager.state = RoundState.READY;
+
+        foreach (GameObject i in allPoints)
+        {   //  Delete all old points
+            Destroy(i);
+        }
+        numPoints = 0;  //  Reset counter
+
+        pointScore.Clear();
     }
 
     void Update()
@@ -260,23 +291,6 @@ public class Cursor : MonoBehaviour
     {
         Retry();
         timeLeft = timeToDraw;
-    }
-
-    void LoadRound()
-    {
-
-        allPoints = new GameObject[maxPoints];  //  Populate array
-        canvas = GameObject.FindGameObjectsWithTag("GameCanvas")[0];    //  Link canvas by Tag
-
-        GameObject roundManager = new GameObject();
-        roundManager = GameObject.FindWithTag("RoundManager");
-        if (roundManager == null)
-            Debug.Log("No round manager!");
-
-        rManager = new RoundManager();
-        rManager = roundManager.GetComponent<RoundManager>();
-        if (rManager == null)
-            Debug.Log("No round manager script!");
     }
 
 }
