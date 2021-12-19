@@ -8,6 +8,8 @@ public class MainMenuButtons : MonoBehaviour
 	[SerializeField]
 	ScenesManager sManager;
 
+	FindEnemy mpScript;
+
 	public Button SingleplayerButton;
 	public Button MultiplayerButton;
 	public Button HelpButton;
@@ -15,9 +17,12 @@ public class MainMenuButtons : MonoBehaviour
 	public Button LeaderboardButton;
 	public Button SettingsButton;
 
+
+
 	void Awake()
     {
 		sManager = GameObject.FindWithTag("SceneManager").GetComponent<ScenesManager>();
+		mpScript = this.GetComponent<FindEnemy>();
 	}
 
 	void Start()
@@ -48,7 +53,8 @@ public class MainMenuButtons : MonoBehaviour
 
 	void OnMultiplayerClick()
 	{
-		sManager.LoadRound();
+		//sManager.LoadRound();
+		mpScript.StartMP();
 	}
 
 	void OnHelpClick()
