@@ -57,6 +57,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         string name = (mpRooms.Count + 1).ToString();
         RoomOptions options = new RoomOptions() { MaxPlayers = 2 };
+
+        Debug.Log("Creating new room " + name);
+
         PhotonNetwork.CreateRoom(name, options);
         isInGame = true;
 
@@ -66,7 +69,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         string name = mpRooms.Count.ToString();
 
+        Debug.Log("Joining room " + name);
+
         PhotonNetwork.JoinRoom(name);
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log("Player " + newPlayer.NickName + " joined the room!");
+        Debug.Log("Player joined!");
+
+    }
+
 
 }

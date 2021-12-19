@@ -64,7 +64,7 @@ public class MainMenuButtons : MonoBehaviour
 
 	void OnQuitClick()
 	{
-		//	Quit
+		Application.Quit();
 	}
 
 	void OnLeaderboardClick()
