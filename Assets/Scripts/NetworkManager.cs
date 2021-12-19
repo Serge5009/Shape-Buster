@@ -4,10 +4,16 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class FindEnemy : MonoBehaviourPunCallbacks
+public class NetworkManager : MonoBehaviourPunCallbacks
 {
     List<RoomInfo> mpRooms = new List<RoomInfo>();
     bool isInGame = false;
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
 
     public void StartMP()
     {
@@ -41,7 +47,7 @@ public class FindEnemy : MonoBehaviourPunCallbacks
         {
             CreateNewRoom();
         }
-        else if(mpRooms.Count > 0 && !isInGame)
+        else if (mpRooms.Count > 0 && !isInGame)
         {
             JoinLastRoom();
         }
