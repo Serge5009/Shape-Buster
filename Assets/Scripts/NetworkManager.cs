@@ -8,6 +8,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     List<RoomInfo> mpRooms = new List<RoomInfo>();
     bool isInGame = false;
+    public bool isGameActive = false;
+
+    [SerializeField]
+    ScenesManager sManager;
 
     void Awake()
     {
@@ -19,6 +23,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
 
         PhotonNetwork.NickName = "Serhii";
+        PhotonNetwork.AutomaticallySyncScene = true;
+
+
         PhotonNetwork.ConnectUsingSettings();
 
     }
@@ -27,13 +34,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected!");
         PhotonNetwork.JoinLobby();
-    }
-
-    public override void OnJoinedRoom()
-    {
-        Debug.Log("Joined");
-
-
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -61,8 +61,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.Log("Creating new room " + name);
 
         PhotonNetwork.CreateRoom(name, options);
-        isInGame = true;
-
     }
 
     void JoinLastRoom()
@@ -74,12 +72,31 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(name);
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    public override void OnPlayerEnteredRoom(Player newPlayer)  //  This will initialize game for Room Master
     {
         Debug.Log("Player " + newPlayer.NickName + " joined the room!");
-        Debug.Log("Player joined!");
+        StartGame();
+    }
+
+    public override void OnJoinedRoom()                         //  This will initialize game for second player
+    {
+        Debug.Log("Joined");
+        int numPlayers = 0;
+        isInGame = true;
+
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            numPlayers++;
+        }
+        if (numPlayers == 2)
+            StartGame();
 
     }
 
 
+    void StartGame()
+    {
+        sManager.LoadRound();
+        isGameActive = true;
+    }
 }

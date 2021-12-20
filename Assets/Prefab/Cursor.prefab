@@ -97,3 +97,4 @@ MonoBehaviour:
   rightColor: {r: 0.4946947, g: 1, b: 0, a: 1}
   wrongColor: {r: 1, g: 0.1948227, b: 0, a: 1}
   scoreText: {fileID: 0}
+  currentScore: 0

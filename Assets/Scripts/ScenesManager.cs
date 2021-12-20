@@ -34,7 +34,7 @@ public class ScenesManager : MonoBehaviour
 
     public void LoadRound()
     {
-        SceneManager.LoadScene(2);                  //  Load scene
+        SceneManager.LoadScene("Round UI");                  //  Load scene
         activeScene = GameScenes.ROUND;             //  Set state
         StartCoroutine(gManager.GameStartDelay());  //  Call round start after short delay
     }
