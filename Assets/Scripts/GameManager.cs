@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    Player player;   //  Contains scores & stats for player
-    Player enemy;   //  Contains scores & stats for enemy
+    PlayerProfile player;   //  Contains scores & stats for player
+    PlayerProfile enemy;   //  Contains scores & stats for enemy
 
     int activeTurn;
 
@@ -42,8 +42,8 @@ public class GameManager : MonoBehaviour
     void StartGame()
     {
 
-        player = new Player();    //  User
-        enemy = new Player();    //  AI or online opponent
+        player = new PlayerProfile();    //  User
+        enemy = new PlayerProfile();    //  AI or online opponent
 
         activeTurn = UnityEngine.Random.Range(0, 1);
 
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         //  Do some loading stuff here (if needed)
 
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         sManager.LoadMainMenu();
 
     }

@@ -9,6 +9,7 @@ TagManager:
   - Cursor
   - RoundManager
   - SceneManager
+  - NetworkManager
   layers:
   - Default
   - TransparentFX

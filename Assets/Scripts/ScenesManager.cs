@@ -6,7 +6,7 @@ public enum GameScenes
     LOADING,
     MAIN_MENU,
     ROUND,
-    HELP = 4,
+    HELP,
     HIGH_SCORES,
     SETTINGS,
 
@@ -26,6 +26,13 @@ public class ScenesManager : MonoBehaviour
         activeScene = GameScenes.LOADING;
     }
 
+    public void LoadLoading()
+    {
+        //SceneManager.LoadScene(0);
+        //activeScene = GameScenes.LOADING;
+        Debug.Log("Simulating loading scene");
+    }
+
     public void LoadMainMenu()
     {
         SceneManager.LoadScene(1);
@@ -34,7 +41,7 @@ public class ScenesManager : MonoBehaviour
 
     public void LoadRound()
     {
-        SceneManager.LoadScene(2);                  //  Load scene
+        SceneManager.LoadScene("Round UI");                  //  Load scene
         activeScene = GameScenes.ROUND;             //  Set state
         StartCoroutine(gManager.GameStartDelay());  //  Call round start after short delay
     }

@@ -148,10 +148,15 @@ public class Cursor : MonoBehaviour
     {
         timeLeft -= Time.deltaTime;
         timeFromLastDot += Time.deltaTime;
+        if (rManager.state == RoundState.TIMEOUT || rManager.state == RoundState.COUNTDOWN)
+            timeLeft = 0;
 
-        if(timeLeft <= 0)
+        //  Later: sync with countdown
+
+        if (timeLeft <= 0)
         {
-            Finish();
+            if(rManager.state != RoundState.TIMEOUT && rManager.state != RoundState.SPECTATE && rManager.state != RoundState.COUNTDOWN)
+                Finish();
         }    
     }
 

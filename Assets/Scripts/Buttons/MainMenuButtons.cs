@@ -8,6 +8,8 @@ public class MainMenuButtons : MonoBehaviour
 	[SerializeField]
 	ScenesManager sManager;
 
+	NetworkManager nManager;
+
 	public Button SingleplayerButton;
 	public Button MultiplayerButton;
 	public Button HelpButton;
@@ -15,9 +17,12 @@ public class MainMenuButtons : MonoBehaviour
 	public Button LeaderboardButton;
 	public Button SettingsButton;
 
+
+
 	void Awake()
     {
 		sManager = GameObject.FindWithTag("SceneManager").GetComponent<ScenesManager>();
+		nManager = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
 	}
 
 	void Start()
@@ -48,7 +53,8 @@ public class MainMenuButtons : MonoBehaviour
 
 	void OnMultiplayerClick()
 	{
-		sManager.LoadRound();
+		//sManager.LoadRound();
+		nManager.StartMP();
 	}
 
 	void OnHelpClick()
@@ -58,7 +64,7 @@ public class MainMenuButtons : MonoBehaviour
 
 	void OnQuitClick()
 	{
-		//	Quit
+		Application.Quit();
 	}
 
 	void OnLeaderboardClick()
