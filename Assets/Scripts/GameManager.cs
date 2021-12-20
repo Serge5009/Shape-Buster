@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         //  Do some loading stuff here (if needed)
 
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         sManager.LoadMainMenu();
 
     }

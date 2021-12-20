@@ -6,7 +6,7 @@ public enum GameScenes
     LOADING,
     MAIN_MENU,
     ROUND,
-    HELP = 4,
+    HELP,
     HIGH_SCORES,
     SETTINGS,
 
