@@ -9,9 +9,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     List<RoomInfo> mpRooms = new List<RoomInfo>();
     bool isInGame = false;
     public bool isGameActive = false;
+    public bool isRoomHost = false;
+
+    Player enemyPlayer;
 
     [SerializeField]
     ScenesManager sManager;
+
+    RoundManager rManager;
 
     void Awake()
     {
@@ -27,6 +32,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
 
         PhotonNetwork.ConnectUsingSettings();
+        sManager.LoadLoading();
 
     }
 
@@ -46,10 +52,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (mpRooms.Count == 0)
         {
             CreateNewRoom();
+            isRoomHost = true;
         }
         else if (mpRooms.Count > 0 && !isInGame)
         {
             JoinLastRoom();
+            isRoomHost = false;
         }
     }
 
@@ -87,6 +95,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
         {
             numPlayers++;
+            if (player.Value != PhotonNetwork.LocalPlayer)
+                enemyPlayer = player.Value;
         }
         if (numPlayers == 2)
             StartGame();
@@ -98,5 +108,26 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         sManager.LoadRound();
         isGameActive = true;
+        StartCoroutine(BindRManager());
     }
+
+    public void SendYourScore(float score)
+    {
+        PhotonView PV = GetComponent<PhotonView>();
+        PV.RPC("SendScore", enemyPlayer, score);
+    }
+
+    [PunRPC]
+    void SendScore(float score)
+    {
+        rManager.UpdateScore(score);
+    }
+
+    IEnumerator BindRManager()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        rManager = GameObject.FindWithTag("RoundManager").GetComponent<RoundManager>();
+    }
+
 }

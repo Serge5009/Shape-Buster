@@ -26,6 +26,13 @@ public class ScenesManager : MonoBehaviour
         activeScene = GameScenes.LOADING;
     }
 
+    public void LoadLoading()
+    {
+        //SceneManager.LoadScene(0);
+        //activeScene = GameScenes.LOADING;
+        Debug.Log("Simulating loading scene");
+    }
+
     public void LoadMainMenu()
     {
         SceneManager.LoadScene(1);
