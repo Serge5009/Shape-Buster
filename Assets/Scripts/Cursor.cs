@@ -40,7 +40,7 @@ public class Cursor : MonoBehaviour
     public Color wrongColor;
 
     public Text scoreText;      //  To display score
-    public float currentScore;
+    public float currentScore = 0;
 
 
     //Vector3 worldPosition;
@@ -274,6 +274,12 @@ public class Cursor : MonoBehaviour
 
     void CurrentScore()
     {
+        if(rManager.state == RoundState.READY)  // Before we start drawing
+        {
+            currentScore = 0;                   // Score will be just 0
+            return;
+        }
+
         float scoreSum = 0;
         foreach (float i in pointScore)
         {

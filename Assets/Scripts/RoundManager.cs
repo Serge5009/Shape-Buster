@@ -90,40 +90,40 @@ public class RoundManager : MonoBehaviour
 
         if (state == RoundState.TIMEOUT && roundCount < 3 & isScoreReceived)
         {
-            isScoreReceived = false;
-
-            finalScore = cursor.GetComponent<Cursor>().currentScore;
-            isRoundWon[roundCount] = (finalScore > enemyScore); //  Note: if scores are the same it's considered as loosing
-
-            if(isRoundWon[roundCount])
-            {
-                circles.PlusWin();
-            }
-            else
-            {
-                circles.PlusLost();
-            }
-
-            roundCount++;
-
-            if (roundCount == 3)
-            {
-                FinishGame();
-                state = RoundState.GAME_FINISHED;
-                return;
-            }
-
-            state = RoundState.COUNTDOWN;
-            StartCoroutine(Countdown());
-
+           EndTurn();
         }
     }
 
     void EndTurn()
     {
+        isScoreReceived = false;
+
+        finalScore = cursor.GetComponent<Cursor>().currentScore;
+        isRoundWon[roundCount] = (finalScore > enemyScore); //  Note: if scores are the same it's considered as loosing
+
+        if (isRoundWon[roundCount])
+        {
+            circles.PlusWin();
+        }
+        else
+        {
+            circles.PlusLost();
+        }
+
+        roundCount++;
+
+        if (roundCount == 3)
+        {
+            FinishGame();
+            state = RoundState.GAME_FINISHED;
+            return;
+        }
+
+        state = RoundState.COUNTDOWN;
+        StartCoroutine(Countdown());
 
     }
-    
+
     IEnumerator Countdown()
     {
         StartText.SetActive(true);
@@ -149,7 +149,7 @@ public class RoundManager : MonoBehaviour
     {
         enemyScore = newScore;
         isScoreReceived = true;
-        enemyScoreText.text = "P2: " + newScore.ToString();
+        enemyScoreText.text = "P2: " + newScore.ToString() + "%";
     }
 
     void FinishGame()
