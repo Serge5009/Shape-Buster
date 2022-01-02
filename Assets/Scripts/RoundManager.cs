@@ -34,7 +34,7 @@ public class RoundManager : MonoBehaviour
     bool isHost;
     NetworkManager nManager;
 
-    int roundCount;
+    int roundCount = 0;
     bool[] isRoundWon;
     bool isScoreReceived = false;
 
@@ -79,14 +79,16 @@ public class RoundManager : MonoBehaviour
 
     void Update()
     {
-        if(state == RoundState.TIMEOUT & roundCount <= 3)
+        if(state == RoundState.TIMEOUT && roundCount < 3)
             {
+            finalScore = cursor.GetComponent<Cursor>().currentScore;
+
             if (isMP)
                 nManager.SendYourScore(finalScore);
             }
 
 
-        if (state == RoundState.TIMEOUT & roundCount <= 3 & isScoreReceived)
+        if (state == RoundState.TIMEOUT && roundCount < 3 & isScoreReceived)
         {
             isScoreReceived = false;
 
@@ -117,7 +119,11 @@ public class RoundManager : MonoBehaviour
         }
     }
 
+    void EndTurn()
+    {
 
+    }
+    
     IEnumerator Countdown()
     {
         StartText.SetActive(true);
