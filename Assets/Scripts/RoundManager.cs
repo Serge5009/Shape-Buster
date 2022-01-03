@@ -77,16 +77,24 @@ public class RoundManager : MonoBehaviour
         StartCoroutine(Countdown());
     }
 
+    float secondTimer = 0.0f;
+    void EverySecondCall()
+    {
+        secondTimer += Time.deltaTime;  //  This breaks the function if less than 1 sec passed since last call
+        if (secondTimer < 1.0f)
+            return;
+        secondTimer -= 1.0f;
+
+        //Actual code that needs to be executed once per second goes below this line
+        if (isMP)
+            nManager.SendYourScore(finalScore);
+    }
+
+
     void Update()
     {
-        if(state == RoundState.TIMEOUT && roundCount < 3)
-            {
-            finalScore = cursor.GetComponent<Cursor>().currentScore;
-
-            if (isMP)
-                nManager.SendYourScore(finalScore);
-            }
-
+        EverySecondCall();
+        finalScore = cursor.GetComponent<Cursor>().currentScore;
 
         if (state == RoundState.TIMEOUT && roundCount < 3 & isScoreReceived)
         {

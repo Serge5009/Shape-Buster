@@ -13,8 +13,19 @@ public enum GameScenes
     NUM_SCENES
 }
 
+public enum LoadingModes
+{
+    LOADING,
+    SINGLEPLAYER,
+    MULTIPLAYER,
+
+    NUM_LOADING_MODES
+}
+
 public class ScenesManager : MonoBehaviour
 {
+    public LoadingModes loadingMode = LoadingModes.LOADING;
+
     public GameScenes activeScene;
 
     [SerializeField]
@@ -48,19 +59,19 @@ public class ScenesManager : MonoBehaviour
 
     public void LoadHelp()
     {
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene(3);
         activeScene = GameScenes.HELP;
     }
 
     public void LoadHighScores()
     {
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene(4);
         activeScene = GameScenes.HIGH_SCORES;
     }
 
     public void LoadSettings()
     {
-        SceneManager.LoadScene(6);
+        SceneManager.LoadScene(5);
         activeScene = GameScenes.SETTINGS;
     }
 }
