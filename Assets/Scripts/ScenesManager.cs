@@ -39,39 +39,39 @@ public class ScenesManager : MonoBehaviour
 
     public void LoadLoading()
     {
-        //SceneManager.LoadScene(0);
-        //activeScene = GameScenes.LOADING;
-        Debug.Log("Simulating loading scene");
+        SceneManager.LoadScene("Loading");
+        activeScene = GameScenes.LOADING;
+        //Debug.Log("Simulating loading scene");
     }
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Main Menu");
         activeScene = GameScenes.MAIN_MENU;
     }
 
     public void LoadRound()
     {
-        SceneManager.LoadScene("Round UI");                  //  Load scene
+        SceneManager.LoadScene("Round UI");         //  Load scene
         activeScene = GameScenes.ROUND;             //  Set state
         StartCoroutine(gManager.GameStartDelay());  //  Call round start after short delay
     }
 
     public void LoadHelp()
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene("Help");
         activeScene = GameScenes.HELP;
     }
 
     public void LoadHighScores()
     {
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene("HighScores");
         activeScene = GameScenes.HIGH_SCORES;
     }
 
     public void LoadSettings()
     {
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene("Settings");
         activeScene = GameScenes.SETTINGS;
     }
 }

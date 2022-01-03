@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        sManager.LoadLoading();
+        sManager.loadingMode = LoadingModes.LOADING;
         StartCoroutine(InitialLoading());   //  Load main menu scene
 
     }
@@ -80,7 +82,7 @@ public class GameManager : MonoBehaviour
         //  Do some loading stuff here (if needed)
 
 
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(2);
         sManager.LoadMainMenu();
 
     }
